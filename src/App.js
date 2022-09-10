@@ -7,6 +7,8 @@ import { useTranslation, initReactI18next } from 'react-i18next';
 import en from './lang/en';
 import es from './lang/es';
 
+import Button from '@mui/material/Button';
+
 i18n.use(initReactI18next).init({
   resources: {
     en: {
@@ -27,7 +29,7 @@ function App() {
   const msg = useSelector((state) => state.Auth.sample);
   const { t } = useTranslation();
 
-  return <div className='App'>{t('hello')}</div>;
+  return <Button variant='outlined'>{t('download')}</Button>;
 }
 
 export default App;
