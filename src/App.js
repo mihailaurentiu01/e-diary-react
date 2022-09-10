@@ -8,12 +8,13 @@ import { styled, useTheme } from '@mui/material/styles';
 import en from './lang/en';
 import es from './lang/es';
 import Layout from './components/Layout';
-import Box from '@mui/material/Box';
 
-import Typography from '@mui/material/Typography';
 import { DRAWER_WIDTH as drawerWidth } from './helpers/constants';
 import { Route, Switch } from 'react-router-dom';
 import Welcome from './pages/Welcome';
+import SignUp from './pages/Signup';
+
+import routes from './helpers/routes';
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -67,8 +68,11 @@ function App() {
       <Main open={open}>
         <DrawerHeader />
         <Switch>
-          <Route path='/' exact>
+          <Route path={routes.welcome} exact>
             <Welcome />
+          </Route>
+          <Route path={routes.signup}>
+            <SignUp />
           </Route>
         </Switch>
       </Main>

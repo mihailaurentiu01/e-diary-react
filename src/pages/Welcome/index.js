@@ -25,7 +25,7 @@ function Welcome() {
       <CssBaseline />
       <Container maxWidth='xs'>
         <ThemeProvider theme={theme}>
-          <Typography variant='h1'>{APP_NAME}</Typography>
+          <Typography variant='h3'>{APP_NAME}</Typography>
           <img className={styles.centered} src={diaryLogo} width='250' />
         </ThemeProvider>
       </Container>

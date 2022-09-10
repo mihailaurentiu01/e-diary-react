@@ -23,6 +23,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavbarActions } from '../../store/modules/Navbar';
 import { DRAWER_WIDTH as drawerWidth } from '../../helpers/constants';
 import { useTranslation } from 'react-i18next';
+import { NavLink } from 'react-router-dom';
+
+import styles from './Navbar.module.css';
+import routes from '../../helpers/routes';
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -113,20 +117,25 @@ export default function PersistentDrawerLeft() {
         {!isLoggedIn && (
           <List>
             <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <LoginIcon />
-                </ListItemIcon>
-                <ListItemText primary={t('login')} />
-              </ListItemButton>
+              <NavLink to={routes.welcome}>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <LoginIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={t('login')} />
+                </ListItemButton>
+              </NavLink>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <PersonIcon />
-                </ListItemIcon>
-                <ListItemText primary={t('signup')} />
-              </ListItemButton>
+              <NavLink to={routes.signup}>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <PersonIcon />
+                  </ListItemIcon>
+
+                  <ListItemText primary={t('signup')} />
+                </ListItemButton>
+              </NavLink>
             </ListItem>
           </List>
         )}
