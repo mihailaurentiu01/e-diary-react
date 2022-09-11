@@ -9,11 +9,30 @@ import { useTranslation } from 'react-i18next';
 
 import useInput from '../../hooks/useInput';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import routes from '../../helpers/routes';
+
+import SnackbarCustom from '../SnackbarCustom';
 
 function SignupForm() {
   const [isPasswordsMatch, setIsPasswordsMatch] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [type, setType] = useState('');
+  const [message, setMessage] = useState('');
 
   const { t } = useTranslation();
+
+  const onHandleOpen = (e) => {
+    setOpen(true);
+  };
+
+  const onHandleClose = (e, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const {
     value: firstNameValue,
@@ -71,10 +90,6 @@ function SignupForm() {
     setIsPasswordsMatch(e.target.value === passwordValue);
   };
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-  };
-
   const isFormValid =
     isFirstNameValid &&
     isLastNameValid &&
@@ -82,6 +97,22 @@ function SignupForm() {
     isPasswordValid &&
     isConfirmPasswordValid &&
     isPasswordsMatch;
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+
+    if (!isFormValid) {
+      setType('error');
+      setMessage(t('alertMessages.incorrectField'));
+      onHandleOpen(null);
+
+      return;
+    }
+
+    setType('success');
+    setMessage(t('alertMessages.successSignup'));
+    onHandleOpen(null);
+  };
 
   return (
     <>
@@ -189,9 +220,23 @@ function SignupForm() {
                   {t('signupForm.createAccount')}
                 </Button>
               </Grid>
+              <Grid item xs={12}>
+                <Link to={routes.login}>
+                  <Button sx={{ width: 1 }} variant='outlined'>
+                    {t('goToLogin')}
+                  </Button>
+                </Link>
+              </Grid>
             </Grid>
           </Box>
         </Box>
+
+        <SnackbarCustom
+          open={open}
+          handleClose={onHandleClose}
+          type={type}
+          msg={message}
+        />
       </Container>
     </>
   );

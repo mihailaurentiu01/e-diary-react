@@ -15,4 +15,9 @@ export default {
   requiredField: 'This field is required',
   validMail: 'E-mail must be valid',
   passwordValid: 'Passwords must match and be +7 characters long',
+  goToLogin: 'Have an account? Go to Login',
+  alertMessages: {
+    incorrectField: 'There are incorrect fields',
+    successSignup: 'Successfully signed up!',
+  },
 };

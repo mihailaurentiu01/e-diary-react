@@ -15,4 +15,9 @@ export default {
   requiredField: 'Este campo es obligatorio',
   validMail: 'El correo debe ser válido',
   passwordValid: 'La contraseña debe ser de más de 7 caracteres y coincidir',
+  goToLogin: 'Tienes cuenta? Ir a inicio de sesión',
+  alertMessages: {
+    incorrectField: 'Existen campos incorrectos',
+    successSignup: 'Registro exitoso!',
+  },
 };
