@@ -117,7 +117,7 @@ export default function PersistentDrawerLeft() {
         {!isLoggedIn && (
           <List>
             <ListItem disablePadding>
-              <NavLink to={routes.welcome}>
+              <NavLink to={routes.login}>
                 <ListItemButton>
                   <ListItemIcon>
                     <LoginIcon />

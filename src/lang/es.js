@@ -16,8 +16,12 @@ export default {
   validMail: 'El correo debe ser válido',
   passwordValid: 'La contraseña debe ser de más de 7 caracteres y coincidir',
   goToLogin: 'Tienes cuenta? Ir a inicio de sesión',
+  goToSignup: 'No tienes cuenta? Registrate',
   alertMessages: {
     incorrectField: 'Existen campos incorrectos',
     successSignup: 'Registro exitoso!',
+  },
+  errorMessages: {
+    unexpected: 'Error inesperado. Inténtelo de nuevo más tarde',
   },
 };
