@@ -23,5 +23,7 @@ export default {
   },
   errorMessages: {
     unexpected: 'Unexpected error. Try again later',
+    emailDoesntExist: 'The given email is not registered',
+    unmatchedData: 'Provided data does not match',
   },
 };

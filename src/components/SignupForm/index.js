@@ -26,28 +26,17 @@ function SignupForm() {
 
   const dispatch = useDispatch();
 
-  const { open, type, message } = useSelector((state) => state.Snackbar);
-
   const { t } = useTranslation();
   const { sendRequest, status, error, clearError } = useHttp(signUpUser);
   const history = useHistory();
 
   const { setOpen } = SnackbarActions;
-  const { setClose } = SnackbarActions;
   const { setMessage } = SnackbarActions;
   const { setType } = SnackbarActions;
 
   const onHandleOpen = (e) => {
     dispatch(setOpen());
   };
-
-  const onHandleClose = useCallback((e, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    dispatch(setClose());
-  }, []);
 
   const { login: loginRoute } = routes;
 

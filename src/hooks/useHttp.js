@@ -11,14 +11,26 @@ const useHttpReducer = (state, action) => {
     case 'pending': {
       return {
         ...state,
+        data: null,
         status: 'pending',
       };
     }
     case 'completed': {
+      const transformedData = [];
+
+      for (const key in action.payload) {
+        const dataObj = {
+          id: key,
+          ...action.payload[key],
+        };
+
+        transformedData.push(dataObj);
+      }
+
       return {
         ...state,
         status: 'completed',
-        data: action.payload,
+        data: transformedData,
       };
     }
     case 'error': {
@@ -41,11 +53,10 @@ const useHttpReducer = (state, action) => {
 };
 
 const useHttp = (requestFn, startAsPending = false) => {
-  const [state, dispatch] = useReducer(useHttpReducer, initialState);
-
-  if (startAsPending) {
-    dispatch({ type: 'pending' });
-  }
+  const [state, dispatch] = useReducer(useHttpReducer, {
+    ...initialState,
+    pending: startAsPending ? 'pending' : '',
+  });
 
   const sendRequest = useCallback(
     async (data) => {

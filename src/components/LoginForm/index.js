@@ -9,19 +9,34 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useTranslation } from 'react-i18next';
 
 import useInput from '../../hooks/useInput';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../../helpers/routes';
 
 import { useHistory } from 'react-router-dom';
 
-import { signUpUser } from '../../services/Api';
+import { getAllUsers } from '../../services/Api';
 import useHttp from '../../hooks/useHttp';
+import { SnackbarActions } from '../../store/modules/Snackbar';
+import { AuthActions } from '../../store/modules/Auth';
+
+import { useDispatch } from 'react-redux';
 
 function LoginForm() {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-  const { sendRequest, status, error, clearError } = useHttp(null);
+  const { sendRequest, status, error, clearError, data } = useHttp(
+    getAllUsers,
+    true
+  );
+
+  const { setOpen } = SnackbarActions;
+  const { setMessage } = SnackbarActions;
+  const { setType } = SnackbarActions;
+  const { setUser } = AuthActions;
+  const { setIsLoggedIn } = AuthActions;
 
   const {
     value: emailValue,
@@ -45,9 +60,51 @@ function LoginForm() {
     isValueValid: isPasswordValid,
   } = useInput((val) => val.length > 0);
 
+  useEffect(() => {
+    sendRequest();
+  }, [sendRequest]);
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
+
+    if (isFormValid) {
+      if (data) {
+        const foundEmailIndex = data.findIndex(
+          (item) => item.email === emailValue
+        );
+
+        if (foundEmailIndex > -1) {
+          const doPasswordsMatch =
+            data[foundEmailIndex].password === passwordValue;
+
+          if (doPasswordsMatch) {
+            // Login
+            dispatch(setUser(data[foundEmailIndex]));
+            dispatch(setIsLoggedIn(true));
+
+            history.replace(routes.dashboard);
+          } else {
+            dispatch(setType('error'));
+            dispatch(setMessage(t('errorMessages.unmatchedData')));
+            dispatch(setOpen(true));
+          }
+        } else {
+          dispatch(setType('error'));
+          dispatch(setMessage(t('errorMessages.emailDoesntExist')));
+          dispatch(setOpen(true));
+        }
+      }
+    }
   };
+
+  if (error) {
+    dispatch(setType('error'));
+    dispatch(setMessage(t('errorMessages.unexpected')));
+    dispatch(setOpen(true));
+    clearError();
+
+    return;
+  }
 
   const isFormValid = isEmailValid && isPasswordValid;
 

@@ -2,8 +2,8 @@ import './App.css';
 
 import { useSelector } from 'react-redux';
 import i18n from 'i18next';
-import { useTranslation, initReactI18next } from 'react-i18next';
-import { styled, useTheme } from '@mui/material/styles';
+import { initReactI18next } from 'react-i18next';
+import { styled } from '@mui/material/styles';
 
 import en from './lang/en';
 import es from './lang/es';
@@ -16,6 +16,8 @@ import SignUp from './pages/Signup';
 
 import routes from './helpers/routes';
 import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import { Redirect } from 'react-router-dom';
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -61,6 +63,27 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   })
 );
 
+function PrivateRoute({ component: Component, ...rest }) {
+  const { isLoggedIn } = useSelector((state) => state.Auth);
+
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        isLoggedIn ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: routes.welcome,
+            }}
+          />
+        )
+      }
+    />
+  );
+}
+
 function App() {
   const open = useSelector((state) => state.Navbar.isDrawerOpen);
 
@@ -78,6 +101,7 @@ function App() {
           <Route path={routes.login}>
             <Login />
           </Route>
+          <PrivateRoute path={routes.dashboard} exact component={Dashboard} />
         </Switch>
       </Main>
     </Layout>
