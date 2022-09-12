@@ -26,4 +26,14 @@ export default {
     emailDoesntExist: 'The given email is not registered',
     unmatchedData: 'Provided data does not match',
   },
+  menuOptions: {
+    dashboard: 'Dashboard',
+    category: 'Category',
+    add: 'Add',
+    manage: 'Manage',
+    notes: 'Notes',
+    changePassword: 'Change password',
+    myProfile: 'My profile',
+    logout: 'Logout',
+  },
 };

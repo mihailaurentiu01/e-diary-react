@@ -26,4 +26,14 @@ export default {
     emailDoesntExist: 'El correo introducido no existe',
     unmatchedData: 'Los datos proporcionados no son coincidentes',
   },
+  menuOptions: {
+    dashboard: 'Panel de control',
+    category: 'Categorías',
+    add: 'Añadir',
+    manage: 'Administrar',
+    notes: 'Notas',
+    changePassword: 'Cambiar contraseña',
+    myProfile: 'Mi perfil',
+    logout: 'Cerrar sesión',
+  },
 };

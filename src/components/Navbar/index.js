@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -18,15 +17,27 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import LoginIcon from '@mui/icons-material/Login';
 import PersonIcon from '@mui/icons-material/Person';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import CategoryIcon from '@mui/icons-material/Category';
+import NotesIcon from '@mui/icons-material/Notes';
+import SettingsIcon from '@mui/icons-material/Settings';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { NavbarActions } from '../../store/modules/Navbar';
+import { AuthActions } from '../../store/modules/Auth';
+
 import { DRAWER_WIDTH as drawerWidth } from '../../helpers/constants';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 
 import styles from './Navbar.module.css';
 import routes from '../../helpers/routes';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -57,6 +68,11 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const [openCollapsedMenuCategory, setOpenCollapsedMenuCategory] =
+    useState(false);
+  const [openCollapsedMenuNotes, setOpenCollapsedMenuNotes] = useState(false);
 
   const { t } = useTranslation();
 
@@ -70,6 +86,23 @@ export default function PersistentDrawerLeft() {
 
   const handleDrawerClose = () => {
     dispatch(NavbarActions.setDrawerIsOpen(false));
+  };
+
+  const onOpenCollapsedMenuCategoryHandler = (e) => {
+    setOpenCollapsedMenuCategory((prevState) => {
+      return !prevState;
+    });
+  };
+
+  const onLogoutHandler = (e) => {
+    dispatch(AuthActions.setIsLoggedIn(false));
+    history.replace(routes.login);
+  };
+
+  const onOpenCollapsedMenuNotesHandler = (e) => {
+    setOpenCollapsedMenuNotes((prevState) => {
+      return !prevState;
+    });
   };
 
   return (
@@ -136,6 +169,99 @@ export default function PersistentDrawerLeft() {
                   <ListItemText primary={t('signup')} />
                 </ListItemButton>
               </NavLink>
+            </ListItem>
+          </List>
+        )}
+
+        {isLoggedIn && (
+          <List>
+            <ListItem disablePadding>
+              <NavLink to={routes.signup}>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <DashboardIcon />
+                  </ListItemIcon>
+
+                  <ListItemText primary={t('menuOptions.dashboard')} />
+                </ListItemButton>
+              </NavLink>
+            </ListItem>
+
+            <ListItemButton onClick={onOpenCollapsedMenuCategoryHandler}>
+              <ListItemIcon>
+                <CategoryIcon />
+              </ListItemIcon>
+              <ListItemText primary={t('menuOptions.category')} />
+              {openCollapsedMenuCategory ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+
+            <Collapse
+              in={openCollapsedMenuCategory}
+              timeout='auto'
+              unmountOnExit
+            >
+              <List component='div' disablePadding>
+                <ListItemButton sx={{ pl: 9 }}>
+                  <ListItemText primary={t('menuOptions.add')} />
+                </ListItemButton>
+                <ListItemButton sx={{ pl: 9 }}>
+                  <ListItemText primary={t('menuOptions.manage')} />
+                </ListItemButton>
+              </List>
+            </Collapse>
+
+            <ListItemButton onClick={onOpenCollapsedMenuNotesHandler}>
+              <ListItemIcon>
+                <NotesIcon />
+              </ListItemIcon>
+              <ListItemText primary={t('menuOptions.notes')} />
+              {openCollapsedMenuNotes ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+
+            <Collapse in={openCollapsedMenuNotes} timeout='auto' unmountOnExit>
+              <List component='div' disablePadding>
+                <ListItemButton sx={{ pl: 9 }}>
+                  <ListItemText primary={t('menuOptions.add')} />
+                </ListItemButton>
+                <ListItemButton sx={{ pl: 9 }}>
+                  <ListItemText primary={t('menuOptions.manage')} />
+                </ListItemButton>
+              </List>
+            </Collapse>
+
+            <Divider />
+
+            <ListItem disablePadding>
+              <NavLink to={routes.dashboard}>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <SettingsIcon />
+                  </ListItemIcon>
+
+                  <ListItemText primary={t('menuOptions.changePassword')} />
+                </ListItemButton>
+              </NavLink>
+            </ListItem>
+
+            <ListItem disablePadding>
+              <NavLink to={routes.dashboard}>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <PersonIcon />
+                  </ListItemIcon>
+
+                  <ListItemText primary={t('menuOptions.myProfile')} />
+                </ListItemButton>
+              </NavLink>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={onLogoutHandler}>
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+
+                <ListItemText primary={t('menuOptions.logout')} />
+              </ListItemButton>
             </ListItem>
           </List>
         )}
