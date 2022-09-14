@@ -5,6 +5,6 @@ export default {
   dashboard: '/dashboard',
   category: {
     base: '/category',
-    add: '/category/add'
-  }
+    add: '/category/add',
+  },
 };
