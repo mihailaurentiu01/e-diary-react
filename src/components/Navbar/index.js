@@ -1,68 +1,68 @@
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import LoginIcon from '@mui/icons-material/Login';
-import PersonIcon from '@mui/icons-material/Person';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import CategoryIcon from '@mui/icons-material/Category';
-import NotesIcon from '@mui/icons-material/Notes';
-import SettingsIcon from '@mui/icons-material/Settings';
-import LogoutIcon from '@mui/icons-material/Logout';
+import { styled, useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import CssBaseline from "@mui/material/CssBaseline";
+import MuiAppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import LoginIcon from "@mui/icons-material/Login";
+import PersonIcon from "@mui/icons-material/Person";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import CategoryIcon from "@mui/icons-material/Category";
+import NotesIcon from "@mui/icons-material/Notes";
+import SettingsIcon from "@mui/icons-material/Settings";
+import LogoutIcon from "@mui/icons-material/Logout";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { NavbarActions } from '../../store/modules/Navbar';
-import { AuthActions } from '../../store/modules/Auth';
+import { useDispatch, useSelector } from "react-redux";
+import { NavbarActions } from "../../store/modules/Navbar";
+import { AuthActions } from "../../store/modules/Auth";
 
-import { DRAWER_WIDTH as drawerWidth } from '../../helpers/constants';
-import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router-dom';
-import Collapse from '@mui/material/Collapse';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
+import { DRAWER_WIDTH as drawerWidth } from "../../helpers/constants";
+import { useTranslation } from "react-i18next";
+import { NavLink } from "react-router-dom";
+import Collapse from "@mui/material/Collapse";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 
-import styles from './Navbar.module.css';
-import routes from '../../helpers/routes';
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import styles from "./Navbar.module.css";
+import routes from "../../helpers/routes";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
+  shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
+  transition: theme.transitions.create(["margin", "width"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
 }));
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
+  justifyContent: "flex-end",
 }));
 
 export default function PersistentDrawerLeft() {
@@ -106,7 +106,7 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position='fixed' open={open}>
         <Toolbar>
@@ -115,7 +115,7 @@ export default function PersistentDrawerLeft() {
             aria-label='open drawer'
             onClick={handleDrawerOpen}
             edge='start'
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+            sx={{ mr: 2, ...(open && { display: "none" }) }}
           >
             <MenuIcon />
           </IconButton>
@@ -128,9 +128,9 @@ export default function PersistentDrawerLeft() {
         sx={{
           width: drawerWidth,
           flexShrink: 0,
-          '& .MuiDrawer-paper': {
+          "& .MuiDrawer-paper": {
             width: drawerWidth,
-            boxSizing: 'border-box',
+            boxSizing: "border-box",
           },
         }}
         variant='persistent'
@@ -139,7 +139,7 @@ export default function PersistentDrawerLeft() {
       >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? (
+            {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
             ) : (
               <ChevronRightIcon />
@@ -155,7 +155,7 @@ export default function PersistentDrawerLeft() {
                   <ListItemIcon>
                     <LoginIcon />
                   </ListItemIcon>
-                  <ListItemText primary={t('login')} />
+                  <ListItemText primary={t("login")} />
                 </ListItemButton>
               </NavLink>
             </ListItem>
@@ -166,7 +166,7 @@ export default function PersistentDrawerLeft() {
                     <PersonIcon />
                   </ListItemIcon>
 
-                  <ListItemText primary={t('signup')} />
+                  <ListItemText primary={t("signup")} />
                 </ListItemButton>
               </NavLink>
             </ListItem>
@@ -176,13 +176,13 @@ export default function PersistentDrawerLeft() {
         {isLoggedIn && (
           <List>
             <ListItem disablePadding>
-              <NavLink to={routes.signup}>
+              <NavLink to={routes.dashboard}>
                 <ListItemButton>
                   <ListItemIcon>
                     <DashboardIcon />
                   </ListItemIcon>
 
-                  <ListItemText primary={t('menuOptions.dashboard')} />
+                  <ListItemText primary={t("menuOptions.dashboard")} />
                 </ListItemButton>
               </NavLink>
             </ListItem>
@@ -191,7 +191,7 @@ export default function PersistentDrawerLeft() {
               <ListItemIcon>
                 <CategoryIcon />
               </ListItemIcon>
-              <ListItemText primary={t('menuOptions.category')} />
+              <ListItemText primary={t("menuOptions.category")} />
               {openCollapsedMenuCategory ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
 
@@ -201,11 +201,14 @@ export default function PersistentDrawerLeft() {
               unmountOnExit
             >
               <List component='div' disablePadding>
+                <NavLink to={routes.category.add}>
+                  <ListItemButton sx={{ pl: 9 }}>
+                    <ListItemText primary={t("menuOptions.add")} />
+                  </ListItemButton>
+                </NavLink>
+
                 <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary={t('menuOptions.add')} />
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary={t('menuOptions.manage')} />
+                  <ListItemText primary={t("menuOptions.manage")} />
                 </ListItemButton>
               </List>
             </Collapse>
@@ -214,17 +217,17 @@ export default function PersistentDrawerLeft() {
               <ListItemIcon>
                 <NotesIcon />
               </ListItemIcon>
-              <ListItemText primary={t('menuOptions.notes')} />
+              <ListItemText primary={t("menuOptions.notes")} />
               {openCollapsedMenuNotes ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
 
             <Collapse in={openCollapsedMenuNotes} timeout='auto' unmountOnExit>
               <List component='div' disablePadding>
                 <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary={t('menuOptions.add')} />
+                  <ListItemText primary={t("menuOptions.add")} />
                 </ListItemButton>
                 <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary={t('menuOptions.manage')} />
+                  <ListItemText primary={t("menuOptions.manage")} />
                 </ListItemButton>
               </List>
             </Collapse>
@@ -238,7 +241,7 @@ export default function PersistentDrawerLeft() {
                     <SettingsIcon />
                   </ListItemIcon>
 
-                  <ListItemText primary={t('menuOptions.changePassword')} />
+                  <ListItemText primary={t("menuOptions.changePassword")} />
                 </ListItemButton>
               </NavLink>
             </ListItem>
@@ -250,7 +253,7 @@ export default function PersistentDrawerLeft() {
                     <PersonIcon />
                   </ListItemIcon>
 
-                  <ListItemText primary={t('menuOptions.myProfile')} />
+                  <ListItemText primary={t("menuOptions.myProfile")} />
                 </ListItemButton>
               </NavLink>
             </ListItem>
@@ -260,7 +263,7 @@ export default function PersistentDrawerLeft() {
                   <LogoutIcon />
                 </ListItemIcon>
 
-                <ListItemText primary={t('menuOptions.logout')} />
+                <ListItemText primary={t("menuOptions.logout")} />
               </ListItemButton>
             </ListItem>
           </List>

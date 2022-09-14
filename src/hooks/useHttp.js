@@ -1,21 +1,21 @@
-import { useCallback, useReducer } from 'react';
+import { useCallback, useReducer } from "react";
 
 const initialState = {
-  status: '',
+  status: "",
   data: null,
   error: null,
 };
 
 const useHttpReducer = (state, action) => {
   switch (action.type) {
-    case 'pending': {
+    case "pending": {
       return {
         ...state,
         data: null,
-        status: 'pending',
+        status: "pending",
       };
     }
-    case 'completed': {
+    case "completed": {
       const transformedData = [];
 
       for (const key in action.payload) {
@@ -29,21 +29,21 @@ const useHttpReducer = (state, action) => {
 
       return {
         ...state,
-        status: 'completed',
+        status: "completed",
         data: transformedData,
       };
     }
-    case 'error': {
+    case "error": {
       return {
         ...state,
-        status: 'error',
+        status: "error",
         error: action.payload,
       };
     }
-    case 'clearError': {
+    case "clearError": {
       return {
         ...state,
-        status: '',
+        status: "",
         error: null,
       };
     }
@@ -55,32 +55,32 @@ const useHttpReducer = (state, action) => {
 const useHttp = (requestFn, startAsPending = false) => {
   const [state, dispatch] = useReducer(useHttpReducer, {
     ...initialState,
-    pending: startAsPending ? 'pending' : '',
+    status: startAsPending ? "pending" : "",
   });
 
   const sendRequest = useCallback(
     async (data) => {
       try {
-        dispatch({ type: 'pending' });
+        dispatch({ type: "pending" });
 
         setTimeout(async () => {
           try {
             const res = await requestFn(data);
 
-            dispatch({ type: 'completed', payload: res.data });
+            dispatch({ type: "completed", payload: res.data });
           } catch (error) {
-            dispatch({ type: 'error', payload: error });
+            dispatch({ type: "error", payload: error });
           }
         }, 2000);
       } catch (error) {
-        dispatch({ type: 'error', payload: error });
+        dispatch({ type: "error", payload: error });
       }
     },
     [requestFn]
   );
 
   const clearError = () => {
-    dispatch({ type: 'clearError' });
+    dispatch({ type: "clearError" });
   };
 
   return {

@@ -1,25 +1,24 @@
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import { Button } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import { Button } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-import useInput from '../../hooks/useInput';
-import { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import routes from '../../helpers/routes';
+import useInput from "../../hooks/useInput";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import routes from "../../helpers/routes";
 
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
-import SnackbarCustom from '../SnackbarCustom';
-import { signUpUser } from '../../services/Api';
-import useHttp from '../../hooks/useHttp';
-import { useSelector, useDispatch } from 'react-redux';
-import { SnackbarActions } from '../../store/modules/Snackbar';
+import { signUpUser } from "../../services/Api";
+import useHttp from "../../hooks/useHttp";
+import { useDispatch } from "react-redux";
+import { SnackbarActions } from "../../store/modules/Snackbar";
 
 function SignupForm() {
   const [isPasswordsMatch, setIsPasswordsMatch] = useState(false);
@@ -41,9 +40,9 @@ function SignupForm() {
   const { login: loginRoute } = routes;
 
   useEffect(() => {
-    if (status === 'completed') {
-      dispatch(setType('success'));
-      dispatch(setMessage(t('alertMessages.successSignup')));
+    if (status === "completed") {
+      dispatch(setType("success"));
+      dispatch(setMessage(t("alertMessages.successSignup")));
       onHandleOpen(null);
 
       setTimeout(() => {
@@ -119,17 +118,19 @@ function SignupForm() {
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    sendRequest({
-      name: firstNameValue,
-      lastName: lastNameValue,
-      email: emailValue,
-      password: passwordValue,
-    });
+    if (isFormValid) {
+      sendRequest({
+        name: firstNameValue,
+        lastName: lastNameValue,
+        email: emailValue,
+        password: passwordValue,
+      });
+    }
   };
 
   if (error) {
-    dispatch(setType('error'));
-    dispatch(setMessage(t('errorMessages.unexpected')));
+    dispatch(setType("error"));
+    dispatch(setMessage(t("errorMessages.unexpected")));
     onHandleOpen(null);
     clearError();
 
@@ -139,28 +140,28 @@ function SignupForm() {
   return (
     <>
       <Container maxWidth='md'>
-        {status === 'pending' && (
+        {status === "pending" && (
           <Box
             sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignContent: 'center',
-              alignItems: 'center',
+              display: "flex",
+              justifyContent: "center",
+              alignContent: "center",
+              alignItems: "center",
             }}
           >
             <CircularProgress />
           </Box>
         )}
 
-        {(status === '' || status === 'completed') && (
+        {(status === "" || status === "completed") && (
           <Box
             sx={{
-              bgcolor: '#cfe8fc',
+              bgcolor: "#cfe8fc",
               flexGrow: 1,
             }}
           >
             <Typography align='center' variant='h2'>
-              {t('userRegistration')}
+              {t("userRegistration")}
             </Typography>
 
             <Box
@@ -175,12 +176,12 @@ function SignupForm() {
                   <TextField
                     value={firstNameValue}
                     error={!isFirstNameValid && hasFirstNameBeenTouched}
-                    helperText={t('requiredField')}
+                    helperText={t("requiredField")}
                     onChange={onChangeFirstNameHandler}
                     onBlur={onBlurFirstNameHandler}
                     sx={{ width: { xs: 1, md: 1 } }}
                     type='text'
-                    label={t('signupForm.firstName')}
+                    label={t("signupForm.firstName")}
                     variant='outlined'
                     required
                   />
@@ -189,12 +190,12 @@ function SignupForm() {
                   <TextField
                     value={lastNameValue}
                     error={!isLastNameValid && hasLastNameBeenTouched}
-                    helperText={t('requiredField')}
+                    helperText={t("requiredField")}
                     onChange={onChangeLastNameHandler}
                     onBlur={onBlurLastNameHandler}
                     sx={{ width: { xs: 1, md: 1 } }}
                     type='text'
-                    label={t('signupForm.lastName')}
+                    label={t("signupForm.lastName")}
                     variant='outlined'
                     required
                   />
@@ -203,12 +204,12 @@ function SignupForm() {
                   <TextField
                     value={emailValue}
                     error={!isEmailValid && hasEmailBeenTouched}
-                    helperText={t('validMail')}
+                    helperText={t("validMail")}
                     onChange={onChangeEmailHandler}
                     onBlur={onBlurEmailHandler}
                     sx={{ width: { xs: 1, md: 1 } }}
                     type='email'
-                    label={t('signupForm.email')}
+                    label={t("signupForm.email")}
                     variant='outlined'
                     required
                   />
@@ -220,12 +221,12 @@ function SignupForm() {
                       (!isPasswordValid || !isPasswordsMatch) &&
                       hasPasswordBeenTouched
                     }
-                    helperText={t('passwordValid')}
+                    helperText={t("passwordValid")}
                     onChange={onCustomChangePasswordHandler}
                     onBlur={onBlurPasswordHandler}
                     sx={{ width: { xs: 1, md: 1 } }}
                     type='password'
-                    label={t('signupForm.password')}
+                    label={t("signupForm.password")}
                     variant='outlined'
                     required
                   />
@@ -241,7 +242,7 @@ function SignupForm() {
                     onBlur={onBlurConfirmPasswordHandler}
                     sx={{ width: { xs: 1, md: 1 } }}
                     type='password'
-                    label={t('signupForm.confirmPassword')}
+                    label={t("signupForm.confirmPassword")}
                     variant='outlined'
                     required
                   />
@@ -253,13 +254,13 @@ function SignupForm() {
                     sx={{ width: 1 }}
                     variant='contained'
                   >
-                    {t('signupForm.createAccount')}
+                    {t("signupForm.createAccount")}
                   </Button>
                 </Grid>
                 <Grid item xs={12}>
                   <Link to={routes.login}>
                     <Button sx={{ width: 1 }} variant='outlined'>
-                      {t('goToLogin')}
+                      {t("goToLogin")}
                     </Button>
                   </Link>
                 </Grid>

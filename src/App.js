@@ -1,23 +1,24 @@
-import './App.css';
+import "./App.css";
 
-import { useSelector } from 'react-redux';
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import { styled } from '@mui/material/styles';
+import { useSelector } from "react-redux";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import { styled } from "@mui/material/styles";
 
-import en from './lang/en';
-import es from './lang/es';
-import Layout from './components/Layout';
+import en from "./lang/en";
+import es from "./lang/es";
+import Layout from "./components/Layout";
 
-import { DRAWER_WIDTH as drawerWidth } from './helpers/constants';
-import { Route, Switch } from 'react-router-dom';
-import Welcome from './pages/Welcome';
-import SignUp from './pages/Signup';
+import { DRAWER_WIDTH as drawerWidth } from "./helpers/constants";
+import { Route, Switch } from "react-router-dom";
+import Welcome from "./pages/Welcome";
+import SignUp from "./pages/Signup";
 
-import routes from './helpers/routes';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import { Redirect } from 'react-router-dom';
+import routes from "./helpers/routes";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import AddCategory from "./pages/Category/Add";
+import { Redirect } from "react-router-dom";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -28,33 +29,33 @@ i18n.use(initReactI18next).init({
       translation: es,
     },
   },
-  lng: 'en',
-  fallbackLng: 'en',
+  lng: "en",
+  fallbackLng: "en",
   interpolation: {
     escapeValue: false,
   },
 });
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
+  justifyContent: "flex-end",
 }));
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
+    transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: `0px`,
     ...(open && {
-      transition: theme.transitions.create('margin', {
+      transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
@@ -102,6 +103,11 @@ function App() {
             <Login />
           </Route>
           <PrivateRoute path={routes.dashboard} exact component={Dashboard} />
+          <PrivateRoute
+            path={routes.category.add}
+            exact
+            component={AddCategory}
+          />
         </Switch>
       </Main>
     </Layout>
