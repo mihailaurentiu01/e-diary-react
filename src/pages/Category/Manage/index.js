@@ -22,7 +22,7 @@ function createData(name, calories, fat, carbs, protein) {
   };
 }
 
-function AddCategory() {
+function ManageCategory() {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
@@ -115,6 +115,10 @@ function AddCategory() {
               },
             ]}
             rows={rows}
+            includesToolbar={true}
+            isDeleteAllowed={true}
+            isEditingAllowed={true}
+            headTitle={'Example'}
           />
         </Grid>
       </Grid>
@@ -122,4 +126,4 @@ function AddCategory() {
   );
 }
 
-export default AddCategory;
+export default ManageCategory;

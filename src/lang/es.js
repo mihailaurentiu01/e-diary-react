@@ -42,4 +42,7 @@ export default {
   submit: 'Enviar',
   manageCategory: 'Administrar categorías',
   densePadding: 'Denso',
+  delete: 'Borrar',
+  edit: 'Editar',
+  selected: 'Selecccionado',
 };

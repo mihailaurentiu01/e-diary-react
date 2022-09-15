@@ -16,6 +16,8 @@ import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 
+import TableToolbar from './Toolbar';
+
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -119,6 +121,17 @@ export default function EnhancedTable(props) {
 
   const { headCells } = props;
   const { rows } = props;
+  const { includesToolbar } = props;
+  const { isDeleteAllowed } = props;
+  const { isEditingAllowed } = props;
+  const { headTitle } = props;
+
+  const { onDelete } = props;
+  const { onEdit } = props;
+
+  const onEditHandler = (e) => {
+    console.log('edit');
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -177,6 +190,14 @@ export default function EnhancedTable(props) {
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
+        {includesToolbar && (
+          <TableToolbar
+            numSelected={selected.length}
+            isDeleteAllowed={isDeleteAllowed}
+            isEditingAllowed={isEditingAllowed}
+            headTitle={headTitle}
+          />
+        )}
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
