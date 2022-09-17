@@ -45,4 +45,6 @@ export default {
   delete: 'Borrar',
   edit: 'Editar',
   selected: 'Selecccionado',
+  creationDate: 'Fecha de creación',
+  categoryDetails: 'Detalles de categorías',
 };
