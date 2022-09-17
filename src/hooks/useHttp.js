@@ -1,49 +1,39 @@
-import { useCallback, useReducer } from "react";
+import { useCallback, useReducer } from 'react';
+import { useSelector } from 'react-redux';
 
 const initialState = {
-  status: "",
+  status: '',
   data: null,
   error: null,
 };
 
 const useHttpReducer = (state, action) => {
   switch (action.type) {
-    case "pending": {
+    case 'pending': {
       return {
         ...state,
         data: null,
-        status: "pending",
+        status: 'pending',
       };
     }
-    case "completed": {
-      const transformedData = [];
-
-      for (const key in action.payload) {
-        const dataObj = {
-          id: key,
-          ...action.payload[key],
-        };
-
-        transformedData.push(dataObj);
-      }
-
+    case 'completed': {
       return {
         ...state,
-        status: "completed",
-        data: transformedData,
+        status: 'completed',
+        data: action.payload,
       };
     }
-    case "error": {
+    case 'error': {
       return {
         ...state,
-        status: "error",
+        status: 'error',
         error: action.payload,
       };
     }
-    case "clearError": {
+    case 'clearError': {
       return {
         ...state,
-        status: "",
+        status: '',
         error: null,
       };
     }
@@ -53,34 +43,65 @@ const useHttpReducer = (state, action) => {
 };
 
 const useHttp = (requestFn, startAsPending = false) => {
+  const { id: loggedInUserId } = useSelector((state) => state.Auth.user);
+
   const [state, dispatch] = useReducer(useHttpReducer, {
     ...initialState,
-    status: startAsPending ? "pending" : "",
+    status: startAsPending ? 'pending' : '',
   });
 
   const sendRequest = useCallback(
     async (data) => {
       try {
-        dispatch({ type: "pending" });
+        dispatch({ type: 'pending' });
 
         setTimeout(async () => {
           try {
             const res = await requestFn(data);
 
-            dispatch({ type: "completed", payload: res.data });
+            dispatch({ type: 'completed', payload: filterByUserId(res.data) });
           } catch (error) {
-            dispatch({ type: "error", payload: error });
+            dispatch({ type: 'error', payload: error });
           }
         }, 2000);
       } catch (error) {
-        dispatch({ type: "error", payload: error });
+        dispatch({ type: 'error', payload: error });
       }
     },
     [requestFn]
   );
 
+  const filterByUserId = (data) => {
+    const transformedData = transformData(data);
+    const hasUserid = transformedData.some((el) => el.userId);
+
+    if (hasUserid) {
+      const formattedData = transformedData.filter(
+        (el) => el.userId === loggedInUserId
+      );
+      return formattedData;
+    }
+
+    return transformedData;
+  };
+
+  const transformData = (data) => {
+    const transformedData = [];
+
+    for (const key in data) {
+      const dataObj = {
+        id: key,
+        ...data[key],
+      };
+
+      transformedData.push(dataObj);
+    }
+
+    return transformedData;
+  };
+
   const clearError = () => {
-    dispatch({ type: "clearError" });
+    dispatch({ type: 'clearError' });
   };
 
   return {

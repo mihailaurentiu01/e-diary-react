@@ -115,6 +115,7 @@ function App() {
             exact
             component={ManageCategory}
           />
+          <PrivateRoute path={routes.category.edit} component={AddCategory} />
         </Switch>
       </Main>
     </Layout>

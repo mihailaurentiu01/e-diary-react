@@ -6,5 +6,6 @@ export default {
   category: {
     base: '/category',
     add: '/category/add',
+    edit: '/category/:id',
   },
 };

@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 const useInput = (validate) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   const [hasBeenTouched, setHasBeenTouched] = useState(false);
 
   const onChangeValueHandler = (e) => {
@@ -9,7 +9,7 @@ const useInput = (validate) => {
   };
 
   const clearValue = () => {
-    setValue("");
+    setValue('');
   };
 
   const clearHasBeenTouched = () => {
@@ -24,6 +24,7 @@ const useInput = (validate) => {
 
   return {
     value,
+    setValue,
     clearValue,
     clearHasBeenTouched,
     hasBeenTouched,

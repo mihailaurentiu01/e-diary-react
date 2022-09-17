@@ -21,6 +21,7 @@ export default {
     incorrectField: 'Existen campos incorrectos',
     successSignup: 'Registro exitoso!',
     successCategoryAdded: 'Categoría añadida con éxito!',
+    successCategoryEdit: 'Categoría editada con éxito!',
   },
   errorMessages: {
     unexpected: 'Error inesperado. Inténtelo de nuevo más tarde',
@@ -47,4 +48,5 @@ export default {
   selected: 'Selecccionado',
   creationDate: 'Fecha de creación',
   categoryDetails: 'Detalles de categorías',
+  editCategory: 'Editar categoría',
 };

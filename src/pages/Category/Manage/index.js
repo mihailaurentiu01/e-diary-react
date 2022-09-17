@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { NavbarActions } from '../../../store/modules/Navbar';
 import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import Breadcrumb from '../../../components/Breadcrumb';
 import BreadcrumbStyled from '../../../components/Breadcrumb/Styled';
@@ -22,6 +24,8 @@ import { SnackbarActions } from '../../../store/modules/Snackbar';
 
 function ManageCategory() {
   const { t } = useTranslation();
+  const history = useHistory();
+  const location = useLocation();
 
   const headCells = [
     {
@@ -68,8 +72,8 @@ function ManageCategory() {
     }
   }, [dispatch, setCurrentPage, sendRequest, status, setCategories, data]);
 
-  const onEditHandler = (selected) => {
-    console.log('edit', selected);
+  const onEditHandler = (id) => {
+    history.push(location.pathname + '/' + id);
   };
 
   const onDeleteHandler = (selected) => {

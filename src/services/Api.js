@@ -18,6 +18,10 @@ export function getCategories() {
   return axios.get(baseUrl + 'categories.json');
 }
 
+export function updateCategory(data) {
+  return axios.put(baseUrl + `categories/${data.id}.json`, data.category);
+}
+
 export default {
   getBaseUrl() {
     return baseUrl;
