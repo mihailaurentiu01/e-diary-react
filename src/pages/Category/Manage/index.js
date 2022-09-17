@@ -9,6 +9,7 @@ import BreadcrumbStyled from '../../../components/Breadcrumb/Styled';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import CategoryIcon from '@mui/icons-material/Category';
 import Table from '../../../components/Table/index';
+import TableCell from '@mui/material/TableCell';
 
 import routes from '../../../helpers/routes';
 
@@ -31,29 +32,41 @@ function ManageCategory() {
   const rows = [
     createData(
       'Cupcake',
-      'ahora',
+      1223,
       new Date('5/1/2022').toLocaleDateString(),
       67,
       4.3
     ),
     createData(
-      'Donut',
-      'ejemplo',
-      new Date('2/1/22').toLocaleDateString(),
-      51,
-      4.9
-    ),
-    createData(
-      'tete',
-      'ejemplo',
-      new Date('5/10/22').toLocaleDateString(),
-      51,
-      4.9
+      'Ejemplo',
+      1223,
+      new Date('1/1/2022').toLocaleDateString(),
+      67,
+      4.3
     ),
   ];
   useEffect(() => {
     dispatch(setCurrentPage(t('manageCategory')));
   }, [dispatch, setCurrentPage]);
+
+  const onEditHandler = (selected) => {
+    console.log('edit', selected);
+  };
+
+  const onDeleteHandler = (selected) => {
+    console.log('delete', selected);
+  };
+
+  const onRenderRow = (row) => {
+    return (
+      <>
+        <TableCell align='right'>{row.calories}</TableCell>
+        <TableCell align='right'>{row.fat}</TableCell>
+        <TableCell align='right'>{row.carbs}</TableCell>
+        <TableCell align='right'>{row.protein}</TableCell>
+      </>
+    );
+  };
 
   return (
     <>
@@ -119,6 +132,9 @@ function ManageCategory() {
             isDeleteAllowed={true}
             isEditingAllowed={true}
             headTitle={'Example'}
+            onEdit={onEditHandler}
+            onDelete={onDeleteHandler}
+            onRenderRow={onRenderRow}
           />
         </Grid>
       </Grid>

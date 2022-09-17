@@ -128,9 +128,14 @@ export default function EnhancedTable(props) {
 
   const { onDelete } = props;
   const { onEdit } = props;
+  const { onRenderRow } = props;
 
   const onEditHandler = (e) => {
-    console.log('edit');
+    onEdit(selected);
+  };
+
+  const onDeleteHandler = (e) => {
+    onDelete(selected);
   };
 
   const handleRequestSort = (event, property) => {
@@ -187,6 +192,10 @@ export default function EnhancedTable(props) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+  const onRenderRowHandler = (row) => {
+    return onRenderRow(row);
+  };
+
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
@@ -196,6 +205,8 @@ export default function EnhancedTable(props) {
             isDeleteAllowed={isDeleteAllowed}
             isEditingAllowed={isEditingAllowed}
             headTitle={headTitle}
+            onEdit={onEditHandler}
+            onDelete={onDeleteHandler}
           />
         )}
         <TableContainer>
@@ -248,10 +259,7 @@ export default function EnhancedTable(props) {
                       >
                         {row.name}
                       </TableCell>
-                      <TableCell align='right'>{row.calories}</TableCell>
-                      <TableCell align='right'>{row.fat}</TableCell>
-                      <TableCell align='right'>{row.carbs}</TableCell>
-                      <TableCell align='right'>{row.protein}</TableCell>
+                      {onRenderRowHandler(row)}
                     </TableRow>
                   );
                 })}
