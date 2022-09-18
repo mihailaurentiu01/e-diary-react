@@ -1,6 +1,6 @@
 import { Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavbarActions } from '../../../store/modules/Navbar';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -18,11 +18,15 @@ import Box from '@mui/material/Box';
 import routes from '../../../helpers/routes';
 
 import useHttp from '../../../hooks/useHttp';
-import { getCategories } from '../../../services/Api';
+import { getCategories, deleteCategory } from '../../../services/Api';
 import { CategoryActions } from '../../../store/modules/Category';
 import { SnackbarActions } from '../../../store/modules/Snackbar';
+import ResponsiveDialog from '../../../components/ResponsiveDialog';
+import { useState } from 'react';
 
 function ManageCategory() {
+  const [openDialog, setOpenDialog] = useState(false);
+
   const { t } = useTranslation();
   const history = useHistory();
   const location = useLocation();
@@ -50,11 +54,21 @@ function ManageCategory() {
 
   const dispatch = useDispatch();
   const { setCurrentPage } = NavbarActions;
+  const { setSelectedCategory } = CategoryActions;
 
+  const { selectedCategory } = useSelector((state) => state.Category);
   const { status, data, error, clearError, sendRequest } = useHttp(
     getCategories,
     true
   );
+
+  const {
+    onUpdateStatusAwaiting,
+    status: statusDelete,
+    error: errorDelete,
+    clearError: clearErrorDelete,
+    sendRequest: sendRequestDelete,
+  } = useHttp(deleteCategory);
 
   const { setCategories } = CategoryActions;
   const { setOpen } = SnackbarActions;
@@ -63,21 +77,49 @@ function ManageCategory() {
 
   useEffect(() => {
     if (status === 'pending') {
-      dispatch(setCurrentPage(t('manageCategory')));
+      if (statusDelete === '') {
+        dispatch(setCurrentPage(t('manageCategory')));
+        sendRequest();
+        onUpdateStatusAwaiting();
+      }
+    }
+
+    if (statusDelete === 'completed') {
       sendRequest();
+      onUpdateStatusAwaiting();
     }
 
     if (status === 'completed') {
       dispatch(setCategories(data));
     }
-  }, [dispatch, setCurrentPage, sendRequest, status, setCategories, data]);
+  }, [
+    dispatch,
+    setCurrentPage,
+    sendRequest,
+    status,
+    setCategories,
+    data,
+    statusDelete,
+    onUpdateStatusAwaiting,
+  ]);
 
   const onEditHandler = (id) => {
     history.push(location.pathname + '/' + id);
   };
 
   const onDeleteHandler = (selected) => {
-    console.log('delete', selected);
+    dispatch(setSelectedCategory(selected[0]));
+    setOpenDialog(true);
+  };
+
+  const onDeleteConfirmHandler = () => {
+    sendRequestDelete({
+      id: selectedCategory.id,
+    });
+  };
+
+  const onCloseDialogHandler = (e) => {
+    setOpenDialog(false);
   };
 
   const onRenderRow = (row) => {
@@ -122,7 +164,9 @@ function ManageCategory() {
         </Grid>
       </Grid>
 
-      {status === 'pending' && (
+      {(status === 'pending' ||
+        statusDelete === 'pending' ||
+        (status === 'pending' && statusDelete === 'await')) && (
         <Box
           sx={{
             display: 'flex',
@@ -135,7 +179,7 @@ function ManageCategory() {
         </Box>
       )}
 
-      {(status === '' || status === 'completed') && (
+      {status === 'completed' && statusDelete === 'await' && (
         <Grid container spacing={2} justifyContent='left' sx={{ p: 1 }}>
           <Grid item xs={12}>
             <Table
@@ -151,6 +195,17 @@ function ManageCategory() {
             />
           </Grid>
         </Grid>
+      )}
+      {openDialog && (
+        <ResponsiveDialog
+          open={openDialog}
+          handleClose={onCloseDialogHandler}
+          context={t('wantToDelete') + `"${selectedCategory?.name}"?`}
+          title={t('delete')}
+          optionCancel={t('no')}
+          optionAgree={t('yes')}
+          handleOnAgree={onDeleteConfirmHandler}
+        />
       )}
     </>
   );

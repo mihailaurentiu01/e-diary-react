@@ -16,6 +16,12 @@ const useHttpReducer = (state, action) => {
         status: 'pending',
       };
     }
+    case 'await': {
+      return {
+        ...state,
+        status: 'await',
+      };
+    }
     case 'completed': {
       return {
         ...state,
@@ -71,6 +77,10 @@ const useHttp = (requestFn, startAsPending = false) => {
     [requestFn]
   );
 
+  const onUpdateStatusAwaiting = () => {
+    dispatch({ type: 'await' });
+  };
+
   const filterByUserId = (data) => {
     const transformedData = transformData(data);
     const hasUserid = transformedData.some((el) => el.userId);
@@ -106,6 +116,7 @@ const useHttp = (requestFn, startAsPending = false) => {
 
   return {
     ...state,
+    onUpdateStatusAwaiting,
     sendRequest,
     clearError,
   };

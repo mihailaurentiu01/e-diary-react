@@ -49,4 +49,8 @@ export default {
   creationDate: 'Fecha de creación',
   categoryDetails: 'Detalles de categorías',
   editCategory: 'Editar categoría',
+  wantToDelete: '¿Eliminar la categoría ',
+  delete: 'Eliminar',
+  no: 'No',
+  yes: 'Si',
 };

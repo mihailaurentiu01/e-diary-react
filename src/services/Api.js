@@ -22,6 +22,10 @@ export function updateCategory(data) {
   return axios.put(baseUrl + `categories/${data.id}.json`, data.category);
 }
 
+export function deleteCategory(data) {
+  return axios.delete(baseUrl + `categories/${data.id}.json`);
+}
+
 export default {
   getBaseUrl() {
     return baseUrl;
