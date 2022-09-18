@@ -22,6 +22,7 @@ export default {
     successSignup: 'Registro exitoso!',
     successCategoryAdded: 'Categoría añadida con éxito!',
     successCategoryEdit: 'Categoría editada con éxito!',
+    successCategoryDelete: 'Categoría eliminada con éxito!',
   },
   errorMessages: {
     unexpected: 'Error inesperado. Inténtelo de nuevo más tarde',

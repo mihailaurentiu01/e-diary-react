@@ -12,10 +12,13 @@ import { addCategory, updateCategory } from '../../../services/Api';
 import { useDispatch, useSelector } from 'react-redux';
 import { SnackbarActions } from '../../../store/modules/Snackbar';
 import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import routes from '../../../helpers/routes';
 
 function AddCategoryForm(props) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const { sendRequest, status, error, clearError } = useHttp(addCategory);
   const { setType, setMessage, setOpen } = SnackbarActions;
@@ -62,6 +65,8 @@ function AddCategoryForm(props) {
       dispatch(setType('success'));
       dispatch(setMessage(t('alertMessages.successCategoryEdit')));
       dispatch(setOpen(true));
+
+      history.push(routes.category.base);
     }
   }, [
     status,

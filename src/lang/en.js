@@ -22,6 +22,7 @@ export default {
     successSignup: 'Successfully signed up!',
     successCategoryAdded: 'Category added successfully!',
     successCategoryEdit: 'Category edited successfully!',
+    successCategoryDelete: 'Category deleted successfully!',
   },
   errorMessages: {
     unexpected: 'Unexpected error. Try again later',

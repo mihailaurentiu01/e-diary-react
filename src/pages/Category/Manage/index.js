@@ -87,6 +87,10 @@ function ManageCategory() {
     if (statusDelete === 'completed') {
       sendRequest();
       onUpdateStatusAwaiting();
+
+      dispatch(setType('success'));
+      dispatch(setMessage(t('alertMessages.successCategoryDelete')));
+      dispatch(setOpen(true));
     }
 
     if (status === 'completed') {
@@ -136,6 +140,15 @@ function ManageCategory() {
     dispatch(setMessage(t('errorMessages.unexpected')));
     dispatch(setOpen(true));
     clearError();
+
+    return;
+  }
+
+  if (errorDelete) {
+    dispatch(setType('error'));
+    dispatch(setMessage(t('errorMessages.unexpected')));
+    dispatch(setOpen(true));
+    clearErrorDelete();
 
     return;
   }
