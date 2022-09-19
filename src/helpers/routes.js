@@ -8,4 +8,8 @@ export default {
     add: '/category/add',
     edit: '/category/:id',
   },
+  notes: {
+    base: '/notes',
+    add: '/notes/add',
+  },
 };

@@ -40,6 +40,7 @@ export default {
     logout: 'Logout',
   },
   addCategory: 'Add category',
+  addNote: 'Add note',
   categoryName: 'Category name',
   submit: 'Submit',
   manageCategory: 'Manage categories',
@@ -54,4 +55,7 @@ export default {
   delete: 'Delete',
   no: 'No',
   yes: 'Yes',
+  notes: 'Notes',
+  addNote: 'Add note',
+  category: 'Category',
 };

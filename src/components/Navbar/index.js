@@ -225,9 +225,12 @@ export default function PersistentDrawerLeft() {
 
             <Collapse in={openCollapsedMenuNotes} timeout='auto' unmountOnExit>
               <List component='div' disablePadding>
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary={t('menuOptions.add')} />
-                </ListItemButton>
+                <NavLink to={routes.notes.add}>
+                  <ListItemButton sx={{ pl: 9 }}>
+                    <ListItemText primary={t('menuOptions.add')} />
+                  </ListItemButton>
+                </NavLink>
+
                 <ListItemButton sx={{ pl: 9 }}>
                   <ListItemText primary={t('menuOptions.manage')} />
                 </ListItemButton>

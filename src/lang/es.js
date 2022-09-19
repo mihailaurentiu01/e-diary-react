@@ -40,6 +40,7 @@ export default {
     logout: 'Cerrar sesión',
   },
   addCategory: 'Añadir categoría',
+  addNote: 'Añadir nota',
   categoryName: 'Nombre de la categoría',
   submit: 'Enviar',
   manageCategory: 'Administrar categorías',
@@ -54,4 +55,7 @@ export default {
   delete: 'Eliminar',
   no: 'No',
   yes: 'Si',
+  notes: 'Notas',
+  addNote: 'Añadir nota',
+  category: 'Categoría',
 };
