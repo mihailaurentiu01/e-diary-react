@@ -58,4 +58,6 @@ export default {
   notes: 'Notes',
   addNote: 'Add note',
   category: 'Category',
+  noteTitle: 'Note title',
+  noteDescription: 'Note description',
 };

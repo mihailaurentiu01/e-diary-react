@@ -26,6 +26,10 @@ export function deleteCategory(data) {
   return axios.delete(baseUrl + `categories/${data.id}.json`);
 }
 
+export function addNote(data) {
+  return axios.post(baseUrl + `notes.json`, data);
+}
+
 export default {
   getBaseUrl() {
     return baseUrl;
