@@ -8,7 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import useInput from '../../../hooks/useInput';
 import useHttp from '../../../hooks/useHttp';
-import { getCategories } from '../../../services/Api';
+import { getCategories, addNote } from '../../../services/Api';
 import { useDispatch, useSelector } from 'react-redux';
 import { SnackbarActions } from '../../../store/modules/Snackbar';
 import { useEffect } from 'react';
@@ -25,18 +25,25 @@ function AddNoteForm(props) {
   const history = useHistory();
 
   const {
+    sendRequest: sendRequestAddNote,
+    status: statusAddNote,
+    error: errorAddNote,
+    clearError: clearErrorAddNote,
+  } = useHttp(addNote);
+
+  const {
     sendRequest: sendRequestGetCategories,
     status: statusGetCategories,
     data: dataCategories,
     error: errorGetCategories,
     clearError: clearErrorGetCategories,
-  } = useHttp(getCategories);
+  } = useHttp(getCategories, true);
 
   const { setType, setMessage, setOpen } = SnackbarActions;
 
+  const { id: userId } = useSelector((state) => state.Auth.user);
   const {
     value: categoryValue,
-
     clearValue: clearCategoryNameValue,
     clearHasBeenTouched: clearCategoryNameHasBeenTouchedValue,
     onChangeValueHandler: onChangeCategoryNameHandler,
@@ -45,24 +52,52 @@ function AddNoteForm(props) {
     isValueValid: isCategoryNameValid,
   } = useInput((val) => val.length > 0);
 
+  const {
+    value: noteTitleValue,
+    clearValue: clearNoteTitleValue,
+    clearHasBeenTouched: clearNoteTitleHasBeenTochedHandler,
+    onChangeValueHandler: onChangeNoteTitleHandler,
+    onBlurHandler: onBlurNoteTitleHandler,
+    hasBeenTouched: hasNoteTitleBeenTouched,
+    isValueValid: isNoteTitleValid,
+  } = useInput((val) => val.length > 0);
+
+  const {
+    value: noteDescriptionValue,
+    clearValue: clearNoteDescriptionValue,
+    clearHasBeenTouched: clearNoteDescriptionHasBeenTouchHandler,
+    onChangeValueHandler: onChangeNoteDescriptionHandler,
+    onBlurHandler: onBlurNoteDescriptionHandler,
+    hasBeenTouched: hasNoteDescriptionBeenTouched,
+    isValueValid: isNoteDescriptionValid,
+  } = useInput((val) => val.length > 0);
+
   useEffect(() => {
     sendRequestGetCategories();
   }, [sendRequestGetCategories]);
 
-  const isFormValid = isCategoryNameValid;
+  const isFormValid =
+    isCategoryNameValid && isNoteTitleValid && isNoteDescriptionValid;
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
     if (isFormValid) {
-      console.log(categoryValue);
+      sendRequestAddNote({
+        userId,
+        categoryId: categoryValue,
+        title: noteTitleValue,
+        description: noteDescriptionValue,
+        creationDate: new Date().toLocaleDateString('es'),
+      });
     }
   };
 
+  console.log(statusAddNote);
   return (
     <>
       <Container maxWidth='md'>
-        {statusGetCategories === 'pending' && (
+        {(statusGetCategories === 'pending' || statusAddNote === 'pending') && (
           <Box
             sx={{
               display: 'flex',
@@ -81,55 +116,82 @@ function AddNoteForm(props) {
             flexGrow: 1,
           }}
         >
-          {statusGetCategories === '' ||
-            (statusGetCategories === 'completed' && (
-              <Box
-                component='form'
-                sx={{}}
-                noValidate
-                autoComplete='off'
-                onSubmit={onSubmitHandler}
-              >
-                <Grid
-                  container
-                  spacing={2}
-                  justifyContent='center'
-                  sx={{ p: 1 }}
-                >
-                  <Grid item xs={12}>
-                    <InputLabel id='select-category'>
-                      {t('category')}
-                    </InputLabel>
-                    <Select
-                      labelId='select-category'
-                      id='select-note-category'
-                      value={categoryValue}
-                      label={t('category')}
-                      onChange={onChangeCategoryNameHandler}
-                    >
-                      {dataCategories.map((category, index) => {
-                        return (
-                          <MenuItem key={category.id} value={category.id}>
-                            {category.name}
-                          </MenuItem>
-                        );
-                      })}
-                    </Select>
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <Button
-                      disabled={!isFormValid}
-                      type='submit'
-                      sx={{ width: 1 }}
-                      variant='contained'
-                    >
-                      {t('submit')}
-                    </Button>
-                  </Grid>
+          {statusAddNote !== 'pending' && statusGetCategories !== 'pending' && (
+            <Box
+              component='form'
+              sx={{}}
+              noValidate
+              autoComplete='off'
+              onSubmit={onSubmitHandler}
+            >
+              <Grid container spacing={2} justifyContent='center' sx={{ p: 1 }}>
+                <Grid item xs={12}>
+                  <InputLabel id='select-category'>{t('category')}</InputLabel>
+                  <Select
+                    labelId='select-category'
+                    id='select-note-category'
+                    value={categoryValue}
+                    sx={{ minWidth: '100%' }}
+                    label={t('category')}
+                    onChange={onChangeCategoryNameHandler}
+                  >
+                    {dataCategories?.map((category, index) => {
+                      return (
+                        <MenuItem key={category.id} value={category.id}>
+                          {category.name}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
                 </Grid>
-              </Box>
-            ))}
+
+                <Grid item xs={12}>
+                  <TextField
+                    value={noteTitleValue}
+                    error={!isNoteTitleValid && hasNoteTitleBeenTouched}
+                    helperText={t('requiredField')}
+                    onChange={onChangeNoteTitleHandler}
+                    onBlur={onBlurNoteTitleHandler}
+                    sx={{ width: { xs: 1, md: 1 } }}
+                    type='text'
+                    label={t('noteTitle')}
+                    variant='outlined'
+                    required
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <TextField
+                    value={noteDescriptionValue}
+                    error={
+                      !isNoteDescriptionValid && hasNoteDescriptionBeenTouched
+                    }
+                    helperText={t('requiredField')}
+                    onChange={onChangeNoteDescriptionHandler}
+                    onBlur={onBlurNoteDescriptionHandler}
+                    sx={{ width: { xs: 1, md: 1 } }}
+                    type='text'
+                    rows={3}
+                    multiline
+                    label={t('noteDescription')}
+                    variant='outlined'
+                    required
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Button
+                    disabled={!isFormValid}
+                    type='submit'
+                    sx={{ width: 1 }}
+                    variant='contained'
+                  >
+                    {t('submit')}
+                  </Button>
+                </Grid>
+              </Grid>
+            </Box>
+          )}
         </Box>
       </Container>
     </>
