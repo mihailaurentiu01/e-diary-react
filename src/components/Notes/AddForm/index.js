@@ -22,6 +22,7 @@ import Select from '@mui/material/Select';
 function AddNoteForm(props) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
   const history = useHistory();
 
   const {
@@ -73,8 +74,24 @@ function AddNoteForm(props) {
   } = useInput((val) => val.length > 0);
 
   useEffect(() => {
-    sendRequestGetCategories();
-  }, [sendRequestGetCategories]);
+    if (statusGetCategories === 'pending') {
+      sendRequestGetCategories();
+    }
+
+    if (statusAddNote === 'completed') {
+      dispatch(setType('success'));
+      dispatch(setMessage(t('alertMessages.successNoteAdded')));
+      dispatch(setOpen(true));
+    }
+  }, [
+    sendRequestGetCategories,
+    statusGetCategories,
+    statusAddNote,
+    dispatch,
+    setType,
+    setMessage,
+    setOpen,
+  ]);
 
   const isFormValid =
     isCategoryNameValid && isNoteTitleValid && isNoteDescriptionValid;
@@ -90,10 +107,34 @@ function AddNoteForm(props) {
         description: noteDescriptionValue,
         creationDate: new Date().toLocaleDateString('es'),
       });
+
+      clearCategoryNameValue();
+      clearCategoryNameHasBeenTouchedValue();
+      clearNoteTitleValue();
+      clearNoteTitleHasBeenTochedHandler();
+      clearNoteDescriptionValue();
+      clearNoteDescriptionHasBeenTouchHandler();
     }
   };
 
-  console.log(statusAddNote);
+  if (errorGetCategories) {
+    dispatch(setType('error'));
+    dispatch(setMessage(t('errorMessages.unexpected')));
+    dispatch(setOpen());
+    clearErrorGetCategories();
+
+    return;
+  }
+
+  if (errorAddNote) {
+    dispatch(setType('error'));
+    dispatch(setMessage(t('errorMessages.unexpected')));
+    dispatch(setOpen());
+    clearErrorAddNote();
+
+    return;
+  }
+
   return (
     <>
       <Container maxWidth='md'>

@@ -23,6 +23,7 @@ export default {
     successCategoryAdded: 'Categoría añadida con éxito!',
     successCategoryEdit: 'Categoría editada con éxito!',
     successCategoryDelete: 'Categoría eliminada con éxito!',
+    successNoteAdded: 'Nota añadida con éxito!',
   },
   errorMessages: {
     unexpected: 'Error inesperado. Inténtelo de nuevo más tarde',
