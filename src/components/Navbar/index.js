@@ -231,9 +231,11 @@ export default function PersistentDrawerLeft() {
                   </ListItemButton>
                 </NavLink>
 
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary={t('menuOptions.manage')} />
-                </ListItemButton>
+                <NavLink to={routes.notes.base}>
+                  <ListItemButton sx={{ pl: 9 }}>
+                    <ListItemText primary={t('menuOptions.manage')} />
+                  </ListItemButton>
+                </NavLink>
               </List>
             </Collapse>
 

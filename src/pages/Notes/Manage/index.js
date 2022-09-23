@@ -15,9 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import routes from '../../../helpers/routes';
 
-function AddNotes() {
-  const [isEditing, setIsEditing] = useState(false);
-
+function ManageNotes() {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
@@ -25,13 +23,13 @@ function AddNotes() {
   const { setCurrentPage } = NavbarActions;
 
   useEffect(() => {
-    dispatch(setCurrentPage(t('addNote')));
+    dispatch(setCurrentPage(t('manageNotes')));
   }, [dispatch, setCurrentPage]);
 
   return (
     <>
       <Typography align='left' variant='h4'>
-        {t('addNote')}
+        {t('manageNotes')}
       </Typography>
       <Grid container spacing={2} justifyContent='left' sx={{ p: 0, mb: 2 }}>
         <Grid item xs={12}>
@@ -48,34 +46,15 @@ function AddNotes() {
               label={t('notes')}
               icon={<NotesIcon fontSize='small' />}
             />
-            {!isEditing && (
-              <BreadcrumbStyled
-                component='p'
-                to={routes.notes.add}
-                label={t('addNote')}
-                icon={<AddIcon fontSize='small' />}
-              />
-            )}
-
-            {isEditing && (
-              <BreadcrumbStyled
-                component='p'
-                to={routes.category.edit}
-                label={t('editCategory')}
-                icon={<EditIcon fontSize='small' />}
-              />
-            )}
           </Breadcrumb>
         </Grid>
       </Grid>
 
       <Grid container spacing={2} justifyContent='left' sx={{ p: 1 }}>
-        <Grid item xs={12}>
-          <AddNoteForm />
-        </Grid>
+        <Grid item xs={12}></Grid>
       </Grid>
     </>
   );
 }
 
-export default AddNotes;
+export default ManageNotes;

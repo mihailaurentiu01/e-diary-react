@@ -61,4 +61,5 @@ export default {
   category: 'Category',
   noteTitle: 'Note title',
   noteDescription: 'Note description',
+  manageNotes: 'Manage notes',
 };
