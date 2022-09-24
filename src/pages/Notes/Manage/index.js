@@ -16,9 +16,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
 import routes from '../../../helpers/routes';
+import { NoteActions } from '../../../store/modules/Note';
 
 import useHttp from '../../../hooks/useHttp';
-import { getNotes } from '../../../services/Api';
+import { getNotes, deleteNote } from '../../../services/Api';
 import { CategoryActions } from '../../../store/modules/Category';
 import { SnackbarActions } from '../../../store/modules/Snackbar';
 import ResponsiveDialog from '../../../components/ResponsiveDialog';
@@ -60,6 +61,8 @@ function ManageNotes() {
 
   const dispatch = useDispatch();
   const { setCurrentPage } = NavbarActions;
+  const { setNotes } = NoteActions;
+  const { setSelectedNote } = NoteActions;
 
   const {
     status: statusGetNotes,
@@ -69,25 +72,69 @@ function ManageNotes() {
     sendRequest: sendRequestGetNotes,
   } = useHttp(getNotes, true);
 
+  const {
+    onUpdateStatusAwaiting,
+    status: statusDelete,
+    error: errorDelete,
+    clearError: clearErrorDelete,
+    sendRequest: sendRequestDelete,
+  } = useHttp(deleteNote);
+
   const { setCategories } = CategoryActions;
   const { setOpen } = SnackbarActions;
   const { setMessage } = SnackbarActions;
   const { setType } = SnackbarActions;
 
+  const { selectedNote } = useSelector((state) => state.Note);
+
   useEffect(() => {
     if (statusGetNotes === 'pending') {
-      sendRequestGetNotes();
+      if (statusDelete === '') {
+        dispatch(setCurrentPage(t('manageNotes')));
+        sendRequestGetNotes();
+        onUpdateStatusAwaiting();
+      }
     }
 
-    dispatch(setCurrentPage(t('manageNotes')));
-  }, [dispatch, setCurrentPage]);
+    if (statusDelete === 'completed') {
+      sendRequestGetNotes();
+      onUpdateStatusAwaiting();
+
+      dispatch(setType('success'));
+      dispatch(setMessage(t('alertMessages.successNoteDeleted')));
+      dispatch(setOpen(true));
+    }
+
+    if (statusGetNotes === 'completed') {
+      dispatch(setNotes(allNotes));
+    }
+  }, [
+    dispatch,
+    setCurrentPage,
+    statusGetNotes,
+    sendRequestGetNotes,
+    setNotes,
+    allNotes,
+    setType,
+    setMessage,
+    setOpen,
+    onUpdateStatusAwaiting,
+    statusDelete,
+  ]);
 
   const onDeleteHandler = (selected) => {
+    dispatch(setSelectedNote(selected[0]));
     setOpenDialog(true);
   };
 
+  const onViewDetailsHandler = (selected) => {
+    console.log('view', selected);
+  };
+
   const onDeleteConfirmHandler = () => {
-    console.log('delete note');
+    sendRequestDelete({
+      id: selectedNote.id,
+    });
   };
 
   const onCloseDialogHandler = (e) => {
@@ -109,6 +156,15 @@ function ManageNotes() {
     dispatch(setMessage(t('errorMessages.unexpected')));
     dispatch(setOpen(true));
     clearErrorGetNotes();
+
+    return;
+  }
+
+  if (errorDelete) {
+    dispatch(setType('error'));
+    dispatch(setMessage(t('errorMessages.unexpected')));
+    dispatch(setOpen(true));
+    clearErrorDelete();
 
     return;
   }
@@ -137,7 +193,9 @@ function ManageNotes() {
         </Grid>
       </Grid>
 
-      {statusGetNotes === 'pending' && (
+      {(statusGetNotes === 'pending' ||
+        statusDelete === 'pending' ||
+        (statusGetNotes === 'pending' && statusDelete === 'await')) && (
         <Box
           sx={{
             display: 'flex',
@@ -150,7 +208,7 @@ function ManageNotes() {
         </Box>
       )}
 
-      {statusGetNotes === 'completed' && (
+      {statusGetNotes === 'completed' && statusDelete === 'await' && (
         <Grid container spacing={2} justifyContent='left' sx={{ p: 1 }}>
           <Grid item xs={12}>
             <Table
@@ -159,8 +217,10 @@ function ManageNotes() {
               includesToolbar={true}
               isDeleteAllowed={true}
               isEditingAllowed={false}
+              isViewDetailsAllowed={true}
               headTitle={t('notesDetails')}
               onDelete={onDeleteHandler}
+              onViewDetails={onViewDetailsHandler}
               onRenderRow={onRenderRow}
             />
           </Grid>
@@ -170,7 +230,7 @@ function ManageNotes() {
         <ResponsiveDialog
           open={openDialog}
           handleClose={onCloseDialogHandler}
-          context={t('wantToDelete')}
+          context={t('wantToDeleteNote') + "'" + selectedNote.title + "'?"}
           title={t('delete')}
           optionCancel={t('no')}
           optionAgree={t('yes')}

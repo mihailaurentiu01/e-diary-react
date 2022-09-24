@@ -123,15 +123,22 @@ export default function EnhancedTable(props) {
   const { rows } = props;
   const { includesToolbar } = props;
   const { isDeleteAllowed } = props;
+  const { isViewDetailsAllowed } = props;
   const { isEditingAllowed } = props;
   const { headTitle } = props;
 
   const { onDelete } = props;
+  const { onViewDetails } = props;
+
   const { onEdit } = props;
   const { onRenderRow } = props;
 
   const onEditHandler = (e) => {
     onEdit(selected);
+  };
+
+  const onViewDetailsHandler = (e) => {
+    onViewDetails(selected);
   };
 
   const onDeleteHandler = (e) => {
@@ -205,9 +212,11 @@ export default function EnhancedTable(props) {
             numSelected={selected.length}
             isDeleteAllowed={isDeleteAllowed}
             isEditingAllowed={isEditingAllowed}
+            isViewDetailsAllowed={isViewDetailsAllowed}
             headTitle={headTitle}
             onEdit={onEditHandler}
             onDelete={onDeleteHandler}
+            onViewDetails={onViewDetailsHandler}
           />
         )}
         <TableContainer>

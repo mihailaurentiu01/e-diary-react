@@ -5,15 +5,19 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Edit } from '@mui/icons-material';
+import { Search } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 function TableToolbar(props) {
   const { numSelected } = props;
   const { isDeleteAllowed } = props;
   const { isEditingAllowed } = props;
+  const { isViewDetailsAllowed } = props;
+
   const { headTitle } = props;
 
   const { onDelete } = props;
   const { onEdit } = props;
+  const { onViewDetails } = props;
 
   const { t } = useTranslation();
 
@@ -51,10 +55,10 @@ function TableToolbar(props) {
         </Typography>
       )}
 
-      {isDeleteAllowed && numSelected === 1 && (
-        <Tooltip title={t('delete')}>
-          <IconButton onClick={onDelete}>
-            <DeleteIcon />
+      {isViewDetailsAllowed && numSelected === 1 && (
+        <Tooltip title={t('viewDetails')}>
+          <IconButton onClick={onViewDetails}>
+            <Search />
           </IconButton>
         </Tooltip>
       )}
@@ -62,6 +66,13 @@ function TableToolbar(props) {
         <Tooltip title={t('edit')}>
           <IconButton onClick={onEdit}>
             <Edit />
+          </IconButton>
+        </Tooltip>
+      )}
+      {isDeleteAllowed && numSelected === 1 && (
+        <Tooltip title={t('delete')}>
+          <IconButton onClick={onDelete}>
+            <DeleteIcon />
           </IconButton>
         </Tooltip>
       )}

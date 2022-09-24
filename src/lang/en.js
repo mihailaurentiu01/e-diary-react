@@ -24,6 +24,7 @@ export default {
     successCategoryEdit: 'Category edited successfully!',
     successCategoryDelete: 'Category deleted successfully!',
     successNoteAdded: 'Note added successfully!',
+    successNoteDeleted: 'Note deleted successfully!',
   },
   errorMessages: {
     unexpected: 'Unexpected error. Try again later',
@@ -53,6 +54,7 @@ export default {
   categoryDetails: 'Category details',
   editCategory: 'Edit category',
   wantToDelete: 'Delete category ',
+  wantToDeleteNote: 'Delete note ',
   delete: 'Delete',
   no: 'No',
   yes: 'Yes',
@@ -64,4 +66,5 @@ export default {
   manageNotes: 'Manage notes',
   notesDetails: 'Notes details',
   title: 'Title',
+  viewDetails: 'View details',
 };
