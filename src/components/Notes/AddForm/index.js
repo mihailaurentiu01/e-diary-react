@@ -23,8 +23,6 @@ function AddNoteForm(props) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const history = useHistory();
-
   const {
     sendRequest: sendRequestAddNote,
     status: statusAddNote,
@@ -43,6 +41,7 @@ function AddNoteForm(props) {
   const { setType, setMessage, setOpen } = SnackbarActions;
 
   const { id: userId } = useSelector((state) => state.Auth.user);
+
   const {
     value: categoryValue,
     clearValue: clearCategoryNameValue,
@@ -103,6 +102,9 @@ function AddNoteForm(props) {
       sendRequestAddNote({
         userId,
         categoryId: categoryValue,
+        categoryName: dataCategories.find(
+          (category) => category.id === categoryValue
+        ).name,
         title: noteTitleValue,
         description: noteDescriptionValue,
         creationDate: new Date().toLocaleDateString('es'),

@@ -30,6 +30,10 @@ export function addNote(data) {
   return axios.post(baseUrl + `notes.json`, data);
 }
 
+export function getNotes() {
+  return axios.get(baseUrl + '/notes.json');
+}
+
 export default {
   getBaseUrl() {
     return baseUrl;

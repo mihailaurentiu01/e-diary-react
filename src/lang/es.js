@@ -62,4 +62,6 @@ export default {
   noteTitle: 'Título de la nota',
   noteDescription: 'Descripción de la nota',
   manageNotes: 'Administrar notas',
+  notesDetails: 'Detalle de notes',
+  title: 'Título',
 };
