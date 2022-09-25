@@ -80,7 +80,6 @@ function ManageNotes() {
     sendRequest: sendRequestDelete,
   } = useHttp(deleteNote);
 
-  const { setCategories } = CategoryActions;
   const { setOpen } = SnackbarActions;
   const { setMessage } = SnackbarActions;
   const { setType } = SnackbarActions;
@@ -128,7 +127,7 @@ function ManageNotes() {
   };
 
   const onViewDetailsHandler = (selected) => {
-    console.log('view', selected);
+    history.push(location.pathname + '/' + selected);
   };
 
   const onDeleteConfirmHandler = () => {

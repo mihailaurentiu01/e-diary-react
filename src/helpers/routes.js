@@ -11,5 +11,6 @@ export default {
   notes: {
     base: '/notes',
     add: '/notes/add',
+    details: '/notes/:id',
   },
 };

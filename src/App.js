@@ -21,6 +21,7 @@ import AddCategory from './pages/Category/Add';
 import ManageCategory from './pages/Category/Manage';
 import AddNote from './pages/Notes/Add';
 import ManageNotes from './pages/Notes/Manage';
+import NoteDetails from './pages/Notes/Details';
 
 import { Redirect } from 'react-router-dom';
 
@@ -118,8 +119,13 @@ function App() {
             component={ManageCategory}
           />
           <PrivateRoute path={routes.category.edit} component={AddCategory} />
-          <PrivateRoute path={routes.notes.add} component={AddNote} />
-          <PrivateRoute path={routes.notes.base} component={ManageNotes} />
+          <PrivateRoute path={routes.notes.add} component={AddNote} exact />
+          <PrivateRoute
+            path={routes.notes.base}
+            component={ManageNotes}
+            exact
+          />
+          <PrivateRoute path={routes.notes.details} component={NoteDetails} />
         </Switch>
       </Main>
     </Layout>
