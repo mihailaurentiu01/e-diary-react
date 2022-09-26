@@ -71,7 +71,6 @@ function ManageNotes() {
     clearError: clearErrorGetNotes,
     sendRequest: sendRequestGetNotes,
   } = useHttp(getNotes, true);
-
   const {
     onUpdateStatusAwaiting,
     status: statusDelete,
@@ -127,6 +126,7 @@ function ManageNotes() {
   };
 
   const onViewDetailsHandler = (selected) => {
+    dispatch(setSelectedNote(selected[0]));
     history.push(location.pathname + '/' + selected);
   };
 

@@ -67,4 +67,5 @@ export default {
   notesDetails: 'Notes details',
   title: 'Title',
   viewDetails: 'View details',
+  noteDetails: 'Note details',
 };
