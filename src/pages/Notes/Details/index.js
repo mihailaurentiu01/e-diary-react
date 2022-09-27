@@ -12,26 +12,23 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import NotesIcon from '@mui/icons-material/Notes';
 import Table from '../../../components/Table/index';
 import TableCell from '@mui/material/TableCell';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
+
 import SearchIcon from '@mui/icons-material/Search';
 
 import routes from '../../../helpers/routes';
-import { NoteActions } from '../../../store/modules/Note';
+import { Button } from '@mui/material';
 
-import useHttp from '../../../hooks/useHttp';
-import { getNotes, deleteNote } from '../../../services/Api';
-import { CategoryActions } from '../../../store/modules/Category';
-import { SnackbarActions } from '../../../store/modules/Snackbar';
-
-import ResponsiveDialog from '../../../components/ResponsiveDialog';
-import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useRouteMatch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import NoteDetailsTable from '../../../components/Notes/Details';
 
 function NoteDetails() {
   const { t } = useTranslation();
-  const history = useHistory();
   const location = useLocation();
+  const match = useRouteMatch();
+
   const params = useParams();
 
   const headCells = [
@@ -70,12 +67,6 @@ function NoteDetails() {
   const dispatch = useDispatch();
   const { setCurrentPage } = NavbarActions;
 
-  const { setCategories } = CategoryActions;
-  const { setOpen } = SnackbarActions;
-  const { setMessage } = SnackbarActions;
-  const { setType } = SnackbarActions;
-  const { setSelectedNote } = NoteActions;
-
   const { selectedNote } = useSelector((state) => state.Note);
   const { id } = params;
 
@@ -83,14 +74,6 @@ function NoteDetails() {
   useEffect(() => {
     dispatch(setCurrentPage(t('noteDetails')));
   }, [dispatch, setCurrentPage]);
-
-  const onDeleteHandler = (selected) => {
-    console.log('on delete handler');
-  };
-
-  const onViewDetailsHandler = (selected) => {
-    console.log('view', selected);
-  };
 
   const onRenderRow = (row) => {
     return (
@@ -145,6 +128,23 @@ function NoteDetails() {
             onRenderRow={onRenderRow}
           />
         </Grid>
+      </Grid>
+      <Grid container spacing={2} justifyContent='center' sx={{ p: 1 }}>
+        <Grid item xs={2}>
+          <Route path={match.path} exact>
+            <Link to={`${location.pathname}/details`}>
+              <Button sx={{ width: 1 }} variant='contained'>
+                {t('noteDetails')}
+              </Button>
+            </Link>
+          </Route>
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={2} justifyContent='left' sx={{ p: 1 }}>
+        <Route path={match.path + '/details'}>
+          <NoteDetailsTable />
+        </Route>
       </Grid>
     </>
   );

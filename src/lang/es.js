@@ -25,6 +25,7 @@ export default {
     successCategoryDelete: 'Categoría eliminada con éxito!',
     successNoteAdded: 'Nota añadida con éxito!',
     successNoteDeleted: 'Nota eliminada con éxito!',
+    successNoteDetailsAdded: 'Detalles de nota añadidos con éxito!',
   },
   errorMessages: {
     unexpected: 'Error inesperado. Inténtelo de nuevo más tarde',
@@ -68,4 +69,5 @@ export default {
   title: 'Título',
   viewDetails: 'Ver detalles',
   noteDetails: 'Detalle de nota',
+  addMoreNote: 'Añadir más nota',
 };

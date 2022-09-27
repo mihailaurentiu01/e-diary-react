@@ -38,6 +38,10 @@ export function deleteNote(data) {
   return axios.delete(baseUrl + `notes/${data.id}.json`);
 }
 
+export function addNoteDetails(data) {
+  return axios.post(baseUrl + 'notesDetails.json', data);
+}
+
 export default {
   getBaseUrl() {
     return baseUrl;
