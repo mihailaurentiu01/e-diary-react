@@ -20,6 +20,8 @@ function AddNoteDetailsForm(props) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
+  const { onNewNoteAdded } = props;
+
   const {
     value: noteDescriptionValue,
     clearValue: clearNoteDescriptionValue,
@@ -42,8 +44,9 @@ function AddNoteDetailsForm(props) {
       dispatch(setType('success'));
       dispatch(setMessage(t('alertMessages.successNoteDetailsAdded')));
       dispatch(setOpen(true));
+      onNewNoteAdded();
     }
-  }, [status]);
+  }, [status, onNewNoteAdded]);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();

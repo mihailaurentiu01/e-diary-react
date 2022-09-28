@@ -26,6 +26,7 @@ export default {
     successNoteAdded: 'Nota añadida con éxito!',
     successNoteDeleted: 'Nota eliminada con éxito!',
     successNoteDetailsAdded: 'Detalles de nota añadidos con éxito!',
+    successNoteDetailsDeleted: 'Detalles de nota eliminados con éxito!',
   },
   errorMessages: {
     unexpected: 'Error inesperado. Inténtelo de nuevo más tarde',
@@ -56,6 +57,7 @@ export default {
   editCategory: 'Editar categoría',
   wantToDelete: '¿Eliminar la categoría ',
   wantToDeleteNote: '¿Elminar la nota ',
+  wantToDeleteNoteDetails: '¿Eliminar el detalle de nota seleccionado?',
   delete: 'Eliminar',
   no: 'No',
   yes: 'Si',
