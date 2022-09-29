@@ -72,4 +72,5 @@ export default {
   viewDetails: 'Ver detalles',
   noteDetails: 'Detalle de nota',
   addMoreNote: 'Añadir más nota',
+  currentPassword: 'Contraseña actual',
 };

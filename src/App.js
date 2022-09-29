@@ -22,6 +22,7 @@ import ManageCategory from './pages/Category/Manage';
 import AddNote from './pages/Notes/Add';
 import ManageNotes from './pages/Notes/Manage';
 import NoteDetails from './pages/Notes/Details';
+import ChangePassword from './pages/Profile/ChangePassword';
 
 import { Redirect } from 'react-router-dom';
 
@@ -126,6 +127,10 @@ function App() {
             exact
           />
           <PrivateRoute path={routes.notes.details} component={NoteDetails} />
+          <PrivateRoute
+            path={routes.profile.changePassword}
+            component={ChangePassword}
+          />
         </Switch>
       </Main>
     </Layout>

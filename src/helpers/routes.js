@@ -13,4 +13,8 @@ export default {
     add: '/notes/add',
     details: '/notes/:id',
   },
+  profile: {
+    base: '/profile',
+    changePassword: '/profile/change-password',
+  },
 };

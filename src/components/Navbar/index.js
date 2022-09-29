@@ -242,7 +242,7 @@ export default function PersistentDrawerLeft() {
             <Divider />
 
             <ListItem disablePadding>
-              <NavLink to={routes.dashboard}>
+              <NavLink to={routes.profile.changePassword}>
                 <ListItemButton>
                   <ListItemIcon>
                     <SettingsIcon />

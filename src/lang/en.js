@@ -72,4 +72,5 @@ export default {
   viewDetails: 'View details',
   noteDetails: 'Note details',
   addMoreNote: 'Add more note',
+  currentPassword: 'Current password',
 };
