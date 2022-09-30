@@ -27,6 +27,7 @@ export default {
     successNoteDeleted: 'Note deleted successfully!',
     successNoteDetailsAdded: 'Note details added successfully!',
     successNoteDetailsDeleted: 'Note details deleted successfully!',
+    successPasswordChanged: 'Password updated successfully!',
   },
   errorMessages: {
     unexpected: 'Unexpected error. Try again later',

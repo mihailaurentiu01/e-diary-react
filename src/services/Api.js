@@ -50,6 +50,10 @@ export function deleteNoteDetails(data) {
   return axios.delete(baseUrl + `notesDetails/${data.id}.json`);
 }
 
+export function updateUserPassword(data) {
+  return axios.put(baseUrl + `users/${data.id}.json`, data.user);
+}
+
 export default {
   getBaseUrl() {
     return baseUrl;

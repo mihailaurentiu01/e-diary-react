@@ -254,17 +254,6 @@ export default function PersistentDrawerLeft() {
             </ListItem>
 
             <ListItem disablePadding>
-              <NavLink to={routes.dashboard}>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <PersonIcon />
-                  </ListItemIcon>
-
-                  <ListItemText primary={t('menuOptions.myProfile')} />
-                </ListItemButton>
-              </NavLink>
-            </ListItem>
-            <ListItem disablePadding>
               <ListItemButton onClick={onLogoutHandler}>
                 <ListItemIcon>
                   <LogoutIcon />

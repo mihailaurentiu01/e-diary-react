@@ -27,6 +27,7 @@ export default {
     successNoteDeleted: 'Nota eliminada con éxito!',
     successNoteDetailsAdded: 'Detalles de nota añadidos con éxito!',
     successNoteDetailsDeleted: 'Detalles de nota eliminados con éxito!',
+    successPasswordChanged: 'Contraseña cambiada con éxito!',
   },
   errorMessages: {
     unexpected: 'Error inesperado. Inténtelo de nuevo más tarde',
