@@ -75,4 +75,6 @@ export default {
   addMoreNote: 'Añadir más nota',
   currentPassword: 'Contraseña actual',
   language: 'Idioma',
+  english: 'Inglés',
+  spanish: 'Español',
 };

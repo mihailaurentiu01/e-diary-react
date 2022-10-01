@@ -39,6 +39,7 @@ import routes from '../../helpers/routes';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import LanguageSelector from '../LanguageSelector';
+import { Grid } from '@mui/material';
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -120,10 +121,17 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant='h6' noWrap component='div'>
-            {currentPage}
-          </Typography>
-          <LanguageSelector />
+
+          <Grid container justifyContent='left'>
+            <Typography variant='h6' noWrap component='div'>
+              {currentPage}
+            </Typography>
+          </Grid>
+          <Grid container spacing={2} justifyContent='right'>
+            <Grid item xs={12} md={2} sx={{ mt: 1 }}>
+              <LanguageSelector />
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
       <Drawer
