@@ -38,6 +38,7 @@ import styles from './Navbar.module.css';
 import routes from '../../helpers/routes';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import LanguageSelector from '../LanguageSelector';
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -122,6 +123,7 @@ export default function PersistentDrawerLeft() {
           <Typography variant='h6' noWrap component='div'>
             {currentPage}
           </Typography>
+          <LanguageSelector />
         </Toolbar>
       </AppBar>
       <Drawer

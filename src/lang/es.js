@@ -74,4 +74,5 @@ export default {
   noteDetails: 'Detalle de nota',
   addMoreNote: 'Añadir más nota',
   currentPassword: 'Contraseña actual',
+  language: 'Idioma',
 };

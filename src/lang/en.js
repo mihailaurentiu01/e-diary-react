@@ -74,4 +74,5 @@ export default {
   noteDetails: 'Note details',
   addMoreNote: 'Add more note',
   currentPassword: 'Current password',
+  language: 'Language',
 };
